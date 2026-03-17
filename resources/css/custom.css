@@ -1,0 +1,62 @@
+body {
+    font-family: "Roboto", sans-serif;
+}
+
+@media (max-width: 600px) {
+
+    .form-actions-buttons,     .form-actions{
+        flex-direction: column !important;
+        width: 100%;
+    }
+    .form-actions-buttons >div{
+        width: 100%;
+    }
+    .form-actions-buttons button, .form-actions-buttons a ,     .form-actions a{
+        width: 100% !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+
+.sortable-drag ul {
+    background-color: rgba(59, 130, 246, 0.03); /* subtle blue */
+}
+
+
+
+
+@media (max-width: 980px) {
+    .header-item-mobily{
+        flex-direction: column;
+
+        align-items: start;
+    }
+}
+
+
+@media (max-width: 790px) {
+    .project-header {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .project-header-right{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .dates-projects{
+        gap: 4px;
+    }
+
+    .mobileVersion{
+        display: none;
+    }
+
+}
+
+
