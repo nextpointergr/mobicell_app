@@ -27,19 +27,6 @@ class Index extends AComponent
     }
 
 
-    public function reorderRoles(array $ids)
-    {
-        Gate::authorize('admin.roles.sorting');
-        foreach ($ids as $index => $id) {
-            Role::where('id', $id)->update([
-                'position' => $index + 1,
-            ]);
-        }
-        $this->dispatch('notify', [
-            'type' => 'success',
-            'message' => __('Order updated successfully'),
-        ]);
-    }
 
     public function render()
     {
@@ -47,8 +34,7 @@ class Index extends AComponent
         $perPage = get_system_pagination();
 
         $query = Role::query()
-            ->when($search, fn ($q) => $q->where('name', 'like', "%{$search}%"))
-            ->orderBy('position');
+            ->when($search, fn ($q) => $q->where('name', 'like', "%{$search}%"));
 
         $items = $query->paginate($perPage);
         $count = Role::count();

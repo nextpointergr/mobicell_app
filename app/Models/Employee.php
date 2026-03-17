@@ -56,4 +56,10 @@ class Employee extends Authenticatable
     }
 
 
+    public function canBeDeleted(): bool
+    {
+        return ! $this->isSystem();
+    }
+
+
 }

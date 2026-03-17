@@ -3,8 +3,7 @@
 namespace App\Livewire\Admin\Teams\Employees;
 
 use App\Livewire\Admin\AComponent;
-use App\Models\Admin;
-use App\Models\User;
+use App\Models\Employee;
 use App\Notifications\AdminWelcomeNotification;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
@@ -17,7 +16,7 @@ class Form extends AComponent
     public $email;
     public $id_role;
     public $isEdit = false;
-    public Admin $employee;
+    public Employee $employee;
 
     public $roles = [];
     protected function rules()
@@ -27,7 +26,7 @@ class Form extends AComponent
             'email' => [
                 'required',
                 'email',
-                Rule::unique('admins', 'email')
+                Rule::unique('employees', 'email')
                     ->ignore($this->id)
                     ->whereNull('deleted_at'),
             ],
@@ -36,7 +35,7 @@ class Form extends AComponent
         ];
     }
 
-    public function mount(?Admin $employee = null)
+    public function mount(?Employee $employee = null)
     {
         $this->roles = Role::orderBy('name')->get();
         if ($employee) {
@@ -53,7 +52,7 @@ class Form extends AComponent
     {
         $this->validate();
         if ($this->isEdit) {
-            $employee = Admin::findOrFail($this->id);
+            $employee = Employee::findOrFail($this->id);
             $employee->update([
                 'name'  => $this->name,
                 'email' => $this->email
@@ -61,7 +60,7 @@ class Form extends AComponent
             $message = __('Employee details have been updated successfully.');
         } else {
 
-            $existing = Admin::withTrashed()
+            $existing = Employee::withTrashed()
                 ->where('email', $this->email)
                 ->first();
             if ($existing) {
@@ -80,7 +79,7 @@ class Form extends AComponent
 
             } else {
                 $plainPassword = Str::random(10);
-                $employee = Admin::create([
+                $employee = Employee::create([
                     'name'     => $this->name,
                     'email'    => $this->email,
                     'password' => Hash::make($plainPassword),

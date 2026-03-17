@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Teams\Employees;
 use App\Livewire\Admin\AComponent;
+use App\Models\Employee;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
@@ -30,7 +31,7 @@ class Index extends AComponent
     {
         Gate::authorize('admin.employees.sorting');
         foreach ($ids as $index => $id) {
-            Admin::where('id', $id)->update([
+            Employee::where('id', $id)->update([
                 'position' => $index + 1,
             ]);
         }
@@ -44,16 +45,15 @@ class Index extends AComponent
     {
         $search = $this->search ?? '';
         $perPage = get_system_pagination();
-        $query = Admin::query()
+        $query = Employee::query()
             ->when($search, function ($q) use ($search) {
                 $q->where(function ($sub) use ($search) {
                     $sub->where('name', 'like', "%{$search}%")
                         ->orWhere('email', 'like', "%{$search}%");
                 });
-            })
-            ->orderBy('position');
+            });
         $items = $query->paginate($perPage);
-        $count = Admin::count();
+        $count = Employee::count();
         return view('livewire.admin.teams.employees.index', compact('items', 'count'));
     }
 
@@ -64,7 +64,7 @@ class Index extends AComponent
 
     public function resendPassword()
     {
-        $admin = Admin::findOrFail($this->confirmingResendId);
+        $admin = Employee::findOrFail($this->confirmingResendId);
 
         if ($admin->is_system) {
             abort(403);

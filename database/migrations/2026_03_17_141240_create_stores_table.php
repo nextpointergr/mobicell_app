@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // όνομα καταστήματος
+            $table->string('name');
             $table->string('slug')->unique();
             $table->boolean('active')->default(true);
             $table->string('address')->nullable();

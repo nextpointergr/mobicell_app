@@ -25,6 +25,12 @@ Route::middleware(['auth:admin'])
 
 
 
+            Route::get('stores', \App\Livewire\Admin\Stores\Index::class)->name('stores')
+                ->defaults('permission_label','View Stores');
+
+            Route::get('stores/create',\App\Livewire\Admin\Stores\Form::class)->name('stores.create')
+            ->defaults('permission_label','Create New Store');
+            Route::get('stores/edit/{id}',\App\Livewire\Admin\Stores\Form::class)->name('stores.edit')->defaults('permission_label','Edit Store');
 
 
 
@@ -68,6 +74,33 @@ Route::middleware(['auth:admin'])
 
 
         Route::get('jobs', \App\Livewire\Admin\Jobs\Index::class)->name('jobs')->defaults('permission_label', 'View Jobs');
+
+
+
+
+
+        Route::middleware(['smtp'])->group(function () {
+            /****************************************** EMPLOYEES **********************************/
+            Route::get('employees', \App\Livewire\Admin\Teams\Employees\Index::class)->name('employees')->defaults('permission_label', 'View Employees');
+            Route::get('employees/create', \App\Livewire\Admin\Teams\Employees\Form::class)->name('employees.create')->defaults('permission_label', 'Create Employee');
+            Route::get('employees/{employee}/edit', \App\Livewire\Admin\Teams\Employees\Form::class)->name('employees.edit')->defaults('permission_label', 'Edit Employee');
+            Route::get('employees/{admin}/delete', \App\Livewire\Admin\Teams\Employees\Delete::class)
+                ->name('employees.delete')->defaults('permission_label', 'Delete Employee');
+            /****************************************** END EMPLOYEES **********************************/
+        });
+        /****************************************** PERMISSIONS **********************************/
+        Route::get('permissions',\App\Livewire\Admin\Teams\Permissions\Index::class)->name('permissions')->defaults('permission_label','Manage Permissions');
+        /****************************************** END PERMISSIONS **********************************/
+
+
+
+        /****************************************** ROLES **********************************/
+        Route::get('roles',\App\Livewire\Admin\Teams\Roles\Index::class)->name('roles')->defaults('permission_label','View Roles');
+        Route::get('roles/create',\App\Livewire\Admin\Teams\Roles\Form::class)->name('roles.create')->defaults('permission_label','Create Role');
+        Route::get('roles/{role}/edit', \App\Livewire\Admin\Teams\Roles\Form::class)->name('roles.edit')->defaults('permission_label','Edit Role');
+        Route::get('roles/{role}/permissions', \App\Livewire\Admin\Teams\Roles\GivePermission::class)->name('roles.permissions')->defaults('permission_label','Manage Role Permissions');
+        Route::get('roles/{role}/delete', \App\Livewire\Admin\Teams\Roles\Delete::class)->name('roles.delete')->defaults('permission_label','Delete Role');
+        /****************************************** END ROLES **********************************/
 
 
 
