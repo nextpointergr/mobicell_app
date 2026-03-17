@@ -13,7 +13,6 @@ class Index extends AComponent
     public $warehouse_id_erp;
     protected array $rules = [
         'admin_panel_list_pagination_number' => 'required|integer|min:1',
-        'warehouse_id_erp' => 'required|integer',
     ];
 
     public function mount()
