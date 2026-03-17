@@ -31,11 +31,8 @@ class Index extends AComponent
                     ->orWhere('queue', 'like', "%{$this->search}%")
                     ->orWhere('exception', 'like', "%{$this->search}%");
             })
-
             ->paginate($page);
-
         $count = FailedJob::count();
-
         return view('livewire.admin.jobs.index', compact('items', 'count'));
     }
 
@@ -43,7 +40,6 @@ class Index extends AComponent
     public function showException($id)
     {
         $job = FailedJob::findOrFail($id);
-
         $this->selectedException = $job->exception;
         $this->showExceptionModal = true;
     }

@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\System\Logs;
 
 use App\Livewire\Admin\AComponent;
 use App\Models\Admin;
+use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithPagination;
 use Livewire\Attributes\Url;
@@ -90,7 +91,7 @@ class Index extends AComponent
 
         if ($this->adminId) {
             $query->where('causer_id', $this->adminId)
-                ->where('causer_type', Admin::class);
+                ->where('causer_type', Employee::class);
         }
 
         if ($this->action) {
@@ -126,7 +127,7 @@ class Index extends AComponent
 
         return view('livewire.admin.system.logs.index', [
             'items' => $query->paginate($this->perPage),
-            'admins' => Admin::orderBy('name')->get(),
+            'admins' => Employee::orderBy('name')->get(),
             'count' => $totalCount,
             'models' => Activity::select('subject_type')
                 ->distinct()

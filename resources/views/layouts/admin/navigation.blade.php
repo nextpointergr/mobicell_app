@@ -28,6 +28,7 @@
             @include('layouts.admin.navs.dashboard')
             @include('layouts.admin.navs.stores')
             @include('layouts.admin.navs.employees')
+            @include('layouts.admin.navs.system')
             @include('layouts.admin.navs.settings')
         </ul><!-- admin-menu flex w-full flex-col gap-1.5-->
     </div><!-- hs-accordion-group h-[calc(100%-72px)] p-4 ps-0-->
