@@ -8,8 +8,8 @@
 
     <div class="sticky top-0 flex h-16 items-center justify-center px-6">
                 <a href="{{route('admin.dashboard')}}" class="flex">
-{{--                    <img src="{{ asset('images/favicon.jpeg') }}" alt="Logo" class="flex h-10">--}}
-                    <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                    <img src="{{ asset('images/favicon.png') }}" alt="Logo" class="flex h-10">
+
                 </a>
     </div>
     <div class="hs-accordion-group h-[calc(100%-72px)] p-4 ps-0" data-simplebar>

@@ -16,8 +16,6 @@ class AdminPermissionMiddleware
         if (! $user) {
             abort(403);
         }
-
-        // 🔒 system admin → full access
         if ($user->is_system) {
             return $next($request);
         }
