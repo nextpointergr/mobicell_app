@@ -31,7 +31,7 @@ Route::middleware(['guest:web'])->group(function () {
 //});
 
 
-Route::middleware(['auth:web', 'verified'])->group(function () {
+Route::middleware(['auth:web', 'verified','gdpr'])->group(function () {
     Route::get('/dashboard', App\Livewire\Stores\Dashboard\Index::class)
         ->name('dashboard');
 });

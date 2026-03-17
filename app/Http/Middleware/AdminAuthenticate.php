@@ -6,15 +6,19 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminAuthenticate
+
+namespace App\Http\Middleware;
+
+use Illuminate\Auth\Middleware\Authenticate;
+
+class AdminAuthenticate extends Authenticate
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  Closure(Request): (Response)  $next
-     */
-    public function handle(Request $request, Closure $next): Response
+    protected function redirectTo($request): ?string
     {
-        return $next($request);
+        if (! $request->expectsJson()) {
+            return route('admin.login');
+        }
+
+        return null;
     }
 }
