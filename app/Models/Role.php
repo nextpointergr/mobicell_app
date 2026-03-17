@@ -34,7 +34,7 @@ class Role extends SpatieRole
     public function admins()
     {
         return $this->morphedByMany(
-            Admin::class,
+            Employee::class,
             'model',
             'model_has_roles',
             'role_id',
