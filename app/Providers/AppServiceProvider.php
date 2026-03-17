@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Providers;
-
+use App\Services\PylonManager;
 use App\Models\Employee;
 use App\Models\Role;
 use App\Policies\EmployeePolicy;
@@ -14,9 +14,11 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-    public function register(): void
+    public function register()
     {
-        //
+        $this->app->singleton(\NextPointer\Pylon\Manager\PylonManager::class, function ($app) {
+            return new PylonManager([]);
+        });
     }
 
     /**

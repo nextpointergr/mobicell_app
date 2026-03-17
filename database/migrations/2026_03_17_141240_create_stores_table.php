@@ -19,6 +19,13 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
+            $table->boolean('central')->default(false);
+            $table->string('pylon_base_url')->nullable();
+            $table->string('pylon_apicode')->nullable();
+            $table->string('pylon_databasealias')->nullable();
+            $table->string('pylon_username')->nullable();
+            $table->string('pylon_password')->nullable();
+            $table->string('pylon_applicationname')->nullable();
             $table->timestamps();
         });
     }

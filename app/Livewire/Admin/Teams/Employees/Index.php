@@ -7,7 +7,6 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
 
-use App\Models\Admin;
 use Illuminate\Support\Facades\Gate;
 use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
@@ -17,9 +16,7 @@ class Index extends AComponent
 {
     use withPagination;
     use WithoutUrlPagination;
-    protected $listeners = [
-        'reorderEmployees',
-    ];
+
 
     public $search;
     public $confirmingResendId = null;
