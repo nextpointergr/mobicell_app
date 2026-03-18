@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.6.4",
         "livewire/volt": "^1.7.0",
+        "nextpointer/prestashop": "main-dev",
         "nextpointer/pylon": "main-dev",
         "spatie/laravel-activitylog": "^4.11",
         "spatie/laravel-permission": "^7.2"

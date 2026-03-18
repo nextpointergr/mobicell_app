@@ -122,5 +122,8 @@ Route::middleware(['auth:admin'])
         Route::get('pylon/sync', \App\Livewire\Admin\Pylon\Sync\Index::class)->name('pylon.sync')
             ->defaults('permission_label','View Pylon Sync');
 
+
+        Route::get('shop/sync', \App\Livewire\Admin\Shop\Sync\Index::class)->name('shop.sync');
+
     });
 

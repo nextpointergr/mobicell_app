@@ -34,6 +34,6 @@
     @endcan
 
 
-
+    <x-quick-actions-panel />
 
 </div>

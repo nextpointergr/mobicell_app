@@ -37,6 +37,8 @@
     "Payments": "Πληρωμές",
     "Shipping": "Αποστολές",
     "Statistics": "Στατιστικά",
-    "Settings ERP": "Παραμετροποίηση"
-
+    "Settings ERP": "Παραμετροποίηση",
+    "ERP Synchronization": "Συγχρονισμός ERP",
+    "Shop Synchronization": "Συγχρονισμός eshop",
+    "Quick Actions": "Γρήγορες Ενέργειες"
 }
