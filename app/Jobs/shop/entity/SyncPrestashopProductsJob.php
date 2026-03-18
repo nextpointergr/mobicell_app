@@ -6,7 +6,7 @@ namespace App\Jobs\shop\entity;
 
 use App\Models\ExternalSync;
 use App\Models\SyncRun;
-
+use App\Models\ShopData;
 use App\Traits\HandlesShopSync;
 use App\Events\SyncProgressUpdated;
 use Illuminate\Bus\Queueable;
@@ -16,17 +16,10 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Nextpointer\Prestashop\Facades\Prestashop;
-
-class SyncPrestashopTaxesJob implements ShouldQueue
+class SyncPrestashopProductsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, HandlesShopSync;
 
-    public $tries = 3;
-    public $timeout = 120;
-
-    /**
-     * @param int $runId Το ID της εγγραφής SyncRun για το tracking
-     */
     public function __construct(
         public int $runId,
         public int $offset = 0,
@@ -40,7 +33,7 @@ class SyncPrestashopTaxesJob implements ShouldQueue
         if ($run->status !== 'running') return;
 
 
-        $response = Prestashop::taxes()
+        $response = Prestashop::products()
             ->limit($this->limit)
             ->offset($this->offset)
             ->since($this->since ?? '')
@@ -55,11 +48,11 @@ class SyncPrestashopTaxesJob implements ShouldQueue
             return;
         }
 
-        $this->performUpsert('prestashop', 'taxes', $items);
+        $this->performUpsert('prestashop', 'products', $items);
         $run->increment('processed', count($items));
 
         event(new SyncProgressUpdated(
-            entity: 'taxes',
+            entity: 'products',
             processed: $run->processed,
             runId: $run->id,completed: false
         ));
@@ -80,7 +73,7 @@ class SyncPrestashopTaxesJob implements ShouldQueue
     {
         // Ενημέρωση ημερομηνίας τελευταίου συγχρονισμού
         ExternalSync::updateOrCreate(
-            ['source' => 'prestashop', 'entity' => 'taxes'],
+            ['source' => 'prestashop', 'entity' => 'products'],
             ['last_synced_at' => now()]
         );
 
@@ -90,7 +83,7 @@ class SyncPrestashopTaxesJob implements ShouldQueue
         ]);
 
         event(new SyncProgressUpdated(
-            entity: 'taxes',
+            entity: 'products',
             processed: $run->processed,
             runId: $run->id,
             completed: true

@@ -12,7 +12,7 @@ use Livewire\Attributes\On;
 class Index extends AComponent
 {
 
-
+    public bool $isFullSync = false;
     /* -----------------------------------------------------------------
      | ENTITIES CONFIG
      |-----------------------------------------------------------------*/
@@ -44,7 +44,15 @@ class Index extends AComponent
             'title' => 'Payments',
             'desc' => 'Payments',
         ],
+
+        'products' => [
+            'job' => DispatchPrestashopGenericSyncJob::class,
+            'queue' => 'prestashop',
+            'title' => 'Products',
+            'desc' => 'Products',
+        ],
     ];
+
 
     public array $selected = [];
     public array $progress = [];
@@ -58,6 +66,12 @@ class Index extends AComponent
         $this->refreshStatus();
     }
 
+    public function startFullShopSync(): void
+    {
+        $this->isFullSync = true;
+        $this->selectAll();
+        $this->startSelected();
+    }
     public function refreshStatus(): void
     {
         foreach ($this->entities as $entity => $config) {
@@ -90,7 +104,7 @@ class Index extends AComponent
             // Instantiate Job
             if ($jobClass === DispatchPrestashopGenericSyncJob::class) {
                 $job = new $jobClass($entity);
-            } elseif ($entity === 'prestashop_products') {
+            } elseif ($entity === 'products') {
                 $job = new $jobClass(500);
             } else {
                 $job = new $jobClass($entity);
@@ -126,6 +140,14 @@ class Index extends AComponent
             $this->selected = array_values(array_diff($this->selected, [$entity]));
             unset($this->progress[$entity]);
 
+            // ΕΔΩ: Αν άδειασε η λίστα των επιλεγμένων, κλείσε το Full Sync mode
+            if (empty($this->selected)) {
+                if ($this->isFullSync) {
+                    $this->dispatch('sync-finished'); // Στέλνει το σήμα για τον χορό!
+                }
+
+                $this->isFullSync = false;
+            }
             $this->refreshStatus();
 
             return;

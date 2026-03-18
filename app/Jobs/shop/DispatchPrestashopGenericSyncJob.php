@@ -3,6 +3,7 @@
 namespace App\Jobs\shop;
 use App\Jobs\shop\entity\SyncPrestashopCarriersJob;
 use App\Jobs\shop\entity\SyncPrestashopPaymentsJob;
+use App\Jobs\shop\entity\SyncPrestashopProductsJob;
 use App\Jobs\shop\entity\SyncPrestashopTaxesJob;
 use App\Models\ExternalSync;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -43,6 +44,7 @@ class DispatchPrestashopGenericSyncJob implements ShouldQueue
             'carriers' => SyncPrestashopCarriersJob::class,
             'taxes' => SyncPrestashopTaxesJob::class,
             'payments' => SyncPrestashopPaymentsJob::class,
+            'products' => SyncPrestashopProductsJob::class,
             default      => null
         };
         if ($workerClass) {
