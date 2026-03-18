@@ -10,8 +10,25 @@
     "The central ecosystem, unifying operations with absolute control and intelligence.": "Ο πυρήνας του ψηφιακού οικοσυστήματος της εταιρείας",
     "Login": "Σύνδεση",
     "Official Store Management": "Διαχείριση Επίσημου Καταστήματος",
-    "Access your store and manage everything.": "Μπείτε στο κατάστημά σας και διαχειριστείτε τα πάντα."
-
-
-
+    "Access your store and manage everything.": "Μπείτε στο κατάστημά σας και διαχειριστείτε τα πάντα.",
+    "Dashboard": "Επισκόπηση",
+    "Stores": "Καταστήματα",
+    "Teams": "Ομάδα",
+    "Employees": "Εργαζόμενοι",
+    "Roles": "Ρόλους",
+    "Permissions": "Δικαιώματα",
+    "System": "Σύστημα",
+    "Settings": "Ρυθμίσεις",
+    "My Profile" : "Προφίλ μου",
+    "My profile" : "Προφίλ μου",
+    "Generally": "Γενικά",
+    "General": "Γενικά",
+    "SMTP":"Διακομιστής SMTP",
+    "API Key":"Κλειδί πρόσβασης API",
+    "API Tokens":"Κλειδί πρόσβασης API",
+    "Performance":"Απόδοση",
+    "Generate API Key": "Δημιουργία API Key",
+    "This API Key is used by external addons (3rd party addons) to allow other systems to communicate with our software.": "Το συγκεκριμένο API Key χρησιμοποιείται από εξωτερικές εφαρμογές (third-party addons) για την ασφαλή επικοινωνία άλλων συστημάτων με το λογισμικό μας",
+    "Save changes": "Ενημέρωση αλλαγών",
+    "Full Name": "Ονοματεπώνυμο"
 }

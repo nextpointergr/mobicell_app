@@ -1,73 +1,50 @@
 @canany(['admin.employees', 'admin.roles', 'admin.permissions'])
-
-    @php
-        $teamsOpen = request()->routeIs(
-            'admin.employees*',
+<li class="list-none group" x-data="{ open: {{ request()->routeIs([ 'admin.employees*',
             'admin.roles*',
-            'admin.permissions*'
-        );
-    @endphp
+            'admin.permissions*']) ? 'true' : 'false' }} }">
+    <button @click="open = !open"
+            class="flex items-center gap-4 w-full px-4 py-2.5 rounded-xl transition-all duration-300
+            {{ request()->routeIs('admin.settings*') ? 'text-slate-900' : 'text-slate-500 hover:bg-slate-50' }}">
 
-    <li class="menu-item">
+        <i class="ti ti-users-group text-[20px] transition-colors
+        {{ request()->routeIs('admin.settings*') ? 'text-[#c02228]' : 'text-slate-300 group-hover:text-slate-500' }}"></i>
 
-        {{-- TOGGLE --}}
-        <button type="button"
-                onclick="this.nextElementSibling.classList.toggle('hidden')"
-                class="flex items-center w-full gap-3
-                   px-4 py-2.5 rounded-lg text-sm
-                   text-slate-700 transition
-                   hover:bg-slate-100
-                   {{ $teamsOpen ? 'bg-slate-100 font-medium' : '' }}">
+        <span class="flex-1 text-left font-bold text-[14px] tracking-tight">{{ __('Teams') }}</span>
 
-            <i class="material-symbols-rounded text-xl">groups</i>
-            <span>{{ __('Teams') }}</span>
+        <i class="ti ti-chevron-right text-[12px] transition-transform duration-300"
+           :class="open ? 'rotate-90 text-[#c02228]' : 'text-slate-300'"></i>
+    </button>
 
-            <i class="material-symbols-rounded ms-auto text-base transition
-            {{ $teamsOpen ? 'rotate-90' : '' }}">
-                chevron_right
-            </i>
-        </button>
 
-        {{-- CONTENT --}}
-        <div class="mt-1 space-y-1 {{ $teamsOpen ? '' : 'hidden' }}">
+    <div x-show="open" x-collapse x-cloak class="mt-1 ml-3 pl-4 border-l border-slate-100 space-y-0.5">
+        @php
+            $subStyle = "block py-2 px-4 text-[13px] font-bold transition-all rounded-lg ";
+            $activeSub = "text-[#c02228] bg-red-50/30 relative before:absolute before:left-[-17px] before:top-2 before:bottom-2 before:w-[2px] before:bg-[#c02228]";
+            $inactiveSub = "text-slate-400 hover:text-slate-700 hover:bg-slate-50";
+        @endphp
 
-            {{-- EMPLOYEES --}}
-            @can('admin.employees')
-                <a href="{{ route('admin.employees') }}"
-                   class="flex items-center w-full
-                      ps-12 pe-4 py-2.5 rounded-lg text-sm
-                      text-slate-600 transition
-                      hover:bg-slate-100
-                      {{ request()->routeIs('admin.employees*') ? 'bg-slate-100 font-medium' : '' }}">
-                    {{ __('Employees') }}
-                </a>
-            @endcan
+        @can('admin.employees')
+            <a href="{{ route('admin.employees') }}"
+               class="{{ $subStyle }} {{ request()->routeIs('admin.employees') ? $activeSub : $inactiveSub }}">
+                {{ __('Employees') }}
+            </a>
+        @endcan
 
-            {{-- ROLES --}}
-            @can('admin.roles')
-                <a href="{{ route('admin.roles') }}"
-                   class="flex items-center w-full
-                      ps-12 pe-4 py-2.5 rounded-lg text-sm
-                      text-slate-600 transition
-                      hover:bg-slate-100
-                      {{ request()->routeIs('admin.roles*') ? 'bg-slate-100 font-medium' : '' }}">
-                    {{ __('Roles') }}
-                </a>
-            @endcan
+        @can('admin.roles')
+            <a href="{{ route('admin.roles') }}"
+               class="{{ $subStyle }} {{ request()->routeIs('admin.roles') ? $activeSub : $inactiveSub }}">
+                {{ __('Roles') }}
+            </a>
+        @endcan
 
-            {{-- PERMISSIONS --}}
-            @can('admin.permissions')
-                <a href="{{ route('admin.permissions') }}"
-                   class="flex items-center w-full
-                      ps-12 pe-4 py-2.5 rounded-lg text-sm
-                      text-slate-600 transition
-                      hover:bg-slate-100
-                      {{ request()->routeIs('admin.permissions*') ? 'bg-slate-100 font-medium' : '' }}">
-                    {{ __('Permissions') }}
-                </a>
-            @endcan
+        @can('admin.permissions')
+            <a href="{{ route('admin.permissions') }}"
+               class="{{ $subStyle }} {{ request()->routeIs('admin.permissions') ? $activeSub : $inactiveSub }}">
+                {{ __('Permissions') }}
+            </a>
+        @endcan
+    </div>
+</li>
 
-        </div>
-    </li>
 
 @endcanany

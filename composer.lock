@@ -2795,7 +2795,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:nextpointergr/pylon.git",
-                "reference": "8902955469043933baeb19501e459563d0791f8f"
+                "reference": "25b881983da134ea7687d33ae7b4cc27b331b779"
             },
             "require": {
                 "illuminate/support": "^10|^11|^12",
@@ -2825,7 +2825,7 @@
                 }
             ],
             "description": "Pylon API Laravel SDK for managing items, orders, categories, payments, shipping and reports across multiple Pylon stores.",
-            "time": "2026-03-17T23:21:41+00:00"
+            "time": "2026-03-18T00:26:14+00:00"
         },
         {
             "name": "nikic/php-parser",

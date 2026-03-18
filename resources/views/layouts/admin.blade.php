@@ -7,11 +7,11 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     {{-- Styles --}}
     @vite([
         'resources/css/app.css',
@@ -39,157 +39,84 @@
     {{-- Page Content --}}
     <div class="flex flex-col flex-1 page-content">
 
-        <header class="sticky top-0 z-50
-               h-16 flex items-center px-6
-               bg-white/80 backdrop-blur
-               border-b border-gray-200">
+        <header class="h-20 flex items-center px-4 md:px-10 bg-white/90 backdrop-blur-md border-b border-slate-100 sticky top-0 z-40">
+            @php $admin = Auth::guard('admin')->user(); @endphp
 
-            {{-- LEFT --}}
-            <div class="flex items-center gap-4">
-                <button
-                    id="button-toggle-menu"
-                    class="p-2 rounded-xl text-gray-500 hover:bg-gray-100 transition"
-                    data-hs-overlay="#app-menu"
-                    aria-label="Toggle navigation"
-                >
-                    <i class="ti ti-menu-2 text-2xl"></i>
+            {{-- Left Section --}}
+            <div class="flex items-center gap-3 md:gap-8 flex-1">
+                {{-- Burger Menu (Πάντα ορατό σε Mobile) --}}
+                <button data-hs-overlay="#app-menu" class="lg:hidden p-2.5 rounded-xl bg-slate-50 text-slate-600 active:scale-95 transition-all">
+                    <i class="ti ti-menu-2 text-xl"></i>
                 </button>
+
+                {{-- Welcome Section (Κρύβουμε το "Admin Dashboard" σε πολύ μικρά κινητά) --}}
+                <div class="flex flex-col">
+                    <h2 class="text-[14px] md:text-[15px] font-bold text-slate-900 leading-tight truncate max-w-[100px] md:max-w-none">
+                        {{ explode(' ', $admin->name)[0] }}
+                    </h2>
+                    <p class="hidden sm:block text-[10px] md:text-[11px] font-semibold text-indigo-500/80 leading-tight">Admin Panel</p>
+                </div>
+
+                {{-- Badges: Εμφανίζονται ΜΟΝΟ από Tablet (md) και πάνω --}}
+                <div class="hidden md:flex items-center gap-2">
+                    {{-- IP Badge --}}
+                    <div class="flex items-center gap-2 px-3 py-1.5 bg-indigo-50/40 rounded-xl border border-indigo-100/50">
+                        <div class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-[8px] font-bold text-indigo-400 uppercase leading-none">IP</span>
+                            <span class="text-[11px] font-mono font-bold text-indigo-600 leading-tight mt-0.5">{{ $admin->last_login_ip ?? '0.0.0.0' }}</span>
+                        </div>
+                    </div>
+
+                    {{-- Activity Badge --}}
+                    <div class="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-xl border border-slate-100">
+                        <i class="ti ti-clock-bolt text-slate-400 text-sm"></i>
+                        <div class="flex flex-col">
+                            <span class="text-[8px] font-bold text-slate-400 uppercase leading-none">Activity</span>
+                            <span class="text-[11px] font-bold text-slate-600 leading-tight mt-0.5">
+            {{-- Χρησιμοποιούμε diffForHumans με true για σύντομη μορφή (π.χ. 1m αντί για 1 minute) --}}
+                                {{ $admin->last_login_at ? $admin->last_login_at->diffForHumans(null, true, true) : 'Now' }}
+        </span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            {{-- RIGHT --}}
-            <div class="ml-auto flex items-center gap-4">
+            {{-- Right Section --}}
+            <div class="flex items-center gap-2 md:gap-4">
 
-                @php
-                    $admin = Auth::guard('admin')->user();
-                @endphp
+                {{-- Optimize Button (Σε mobile κρατάμε μόνο το εικονίδιο) --}}
+                <button class="h-10 w-10 md:h-11 md:w-auto md:px-5 rounded-xl bg-slate-900 text-white hover:bg-indigo-600 transition-all flex items-center justify-center gap-2 shadow-lg shadow-slate-200 active:scale-95">
+                    <i class="ti ti-refresh text-lg"></i>
+                    <span class="text-[10px] font-black uppercase hidden md:block">Optimize</span>
+                </button>
 
-                <div class="flex items-center gap-4
-            px-5 py-3
+                {{-- Διαχωριστικό (Κρύβεται σε κινητά) --}}
+                <div class="hidden sm:block w-px h-8 bg-slate-100 mx-1"></div>
 
-          mobileVersion">
-
-                    {{-- Avatar --}}
+                {{-- Profile --}}
+                <div class="flex items-center gap-2">
+                    {{-- Avatar (Λίγο μικρότερο σε mobile) --}}
                     <div class="relative">
-                        <div class="h-10 w-10 rounded-full
-                    bg-indigo-100 text-indigo-600
-                    flex items-center justify-center
-                    font-semibold text-sm">
-                            {{ strtoupper(substr($admin->name, 0, 1)) }}
+                        <div class="h-9 w-9 md:h-11 md:w-11 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center font-black text-slate-700 shadow-sm">
+                            <span class="text-xs md:text-sm">{{ strtoupper(substr($admin->name, 0, 1)) }}</span>
                         </div>
-
-                        <span class="absolute -bottom-0.5 -right-0.5
-                     h-3 w-3 rounded-full
-                     bg-green-500 border-2 border-white">
-        </span>
+                        <span class="absolute -top-0.5 -right-0.5 h-3 w-3 bg-green-500 border-2 border-white rounded-full"></span>
                     </div>
 
-                    {{-- Info --}}
-                    <div class="flex flex-col leading-tight">
-
-                        <div class="flex items-center gap-2">
-            <span class="text-sm font-semibold text-gray-800">
-                {{ $admin->name }}
-            </span>
-
-                            <span class="text-[10px] px-2 py-0.5 rounded-full
-                         bg-indigo-50 text-indigo-600 font-medium">
-                {{ $admin->getRoleNames()->first() }}
-            </span>
-                        </div>
-
-                        <div class="flex items-center gap-3
-                    text-[11px] text-gray-500 mt-1">
-
-            <span>
-                {{ __('Last login') }} ·
-                <span class="font-medium text-gray-600">
-                    {{ $admin->last_login_at
-                        ? $admin->last_login_at->diffForHumans()
-                        : __('Never') }}
-                </span>
-            </span>
-
-                            <span class="text-gray-300">•</span>
-
-                            <span class="font-mono text-gray-600">
-                {{ $admin->last_login_ip ?? '—' }}
-            </span>
-
-                        </div>
-
-                    </div>
+                    {{-- Logout (Πάντα ορατό) --}}
+                    <form method="POST" action="{{ route('admin.logout') }}">
+                        @csrf
+                        <button type="submit" class="h-9 w-9 md:h-11 md:w-11 flex items-center justify-center rounded-xl text-slate-400 hover:bg-red-50 hover:text-red-500 transition-all">
+                            <i class="ti ti-power text-xl"></i>
+                        </button>
+                    </form>
                 </div>
-
-
-
-                {{-- CLEAR CACHE SWITCH --}}
-                <div x-data="{ loading: false }">
-                    <button
-                        type="button"
-                        @click="
-                    if(confirm('Are you sure you want to clear system cache?')){
-                        loading = true;
-                        fetch('{{ route('admin.system.run-commands') }}', {
-                            method: 'POST',
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                keys: ['cache_clear','config_clear','route_clear','optimize_clear']
-                            })
-                        }).then(() => {
-                            loading = false;
-                        });
-                    }
-                "
-                        :class="loading
-                    ? 'bg-indigo-600 text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
-                        class="inline-flex items-center gap-2
-                       px-3 py-2
-                       rounded-xl
-                       text-sm font-medium
-                       transition shadow-sm"
-                    >
-                        <i class="ti ti-refresh text-lg"
-                           :class="loading ? 'animate-spin' : ''"></i>
-
-                        <span class="hidden md:inline">
-                    Clear Cache
-                </span>
-                    </button>
-                </div>
-
-
-                {{-- LOGOUT (Modern Ghost Style) --}}
-                <form method="POST" action="{{ route('admin.logout') }}">
-                    @csrf
-                    <button
-                        type="submit"
-                        class="group inline-flex items-center gap-2
-                       px-3 py-2
-                       rounded-xl
-                       text-sm font-medium
-                       text-gray-600
-                       hover:bg-gray-100
-                       hover:text-gray-900
-                       transition"
-                    >
-                        <i class="ti ti-logout text-lg
-                          group-hover:translate-x-0.5 transition">
-                        </i>
-
-                        <span class="hidden md:inline">
-                    Logout
-                </span>
-                    </button>
-                </form>
-
             </div>
         </header>
-
-        {{-- Optional Page Header --}}
         @isset($header)
             <div class="bg-white shadow px-6 py-4">
                 {{ $header }}
@@ -276,6 +203,7 @@
 
         });
     });
+
 </script>
 </body>
 </html>
