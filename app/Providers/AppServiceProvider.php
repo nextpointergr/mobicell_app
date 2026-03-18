@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Providers;
+use App\Services\ErpConfigurationService;
 use App\Services\PylonManager;
 use App\Models\Employee;
 use App\Models\Role;
@@ -9,6 +10,8 @@ use App\Policies\RolePolicy;
 use Illuminate\Support\ServiceProvider;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\View;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -26,6 +29,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        View::composer('*', function ($view) {
+            $erpConfig = app(ErpConfigurationService::class)->check();
+            $view->with('erpConfig', $erpConfig);
+        });
+
+
         Carbon::setLocale('el');
         Gate::policy(Employee::class, EmployeePolicy::class);
         Gate::policy(Role::class, RolePolicy::class);

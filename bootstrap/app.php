@@ -15,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'auth'  => \App\Http\Middleware\Authenticate::class,
             'admin.permission' => \App\Http\Middleware\AdminPermissionMiddleware::class,
-
+            'erp.configured' => \App\Http\Middleware\EnsureErpConfigured::class,
             'auth.admin' => \App\Http\Middleware\AdminAuthenticate::class,
             'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
             'smtp' => \App\Http\Middleware\EnsureSmtpConfigured::class,

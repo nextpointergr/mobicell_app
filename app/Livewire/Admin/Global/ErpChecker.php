@@ -2,11 +2,12 @@
 
 namespace App\Livewire\Admin\Global;
 
+use App\Livewire\Admin\AComponent;
 use App\Models\Store;
 use Livewire\Component;
 use NextPointer\Pylon\Facades\Pylon;
 use Livewire\Attributes\On;
-class ErpChecker extends Component
+class ErpChecker extends AComponent
 {
 
 

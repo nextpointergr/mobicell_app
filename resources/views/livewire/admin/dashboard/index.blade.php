@@ -25,6 +25,8 @@
 
     <livewire:admin.settings.smtp.smtp-alert />
 
+    <livewire:admin.global.erp-configuration-alert />
+
     @can('admin.dashboard.activity')
         @if($recentActivities && $recentActivities->count())
             <x-dashboard.activity-feed :activities="$recentActivities" />
