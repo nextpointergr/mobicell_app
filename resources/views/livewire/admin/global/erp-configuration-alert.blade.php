@@ -1,47 +1,52 @@
-<div>
+<div class="my-8 px-6">
     @if($erpConfig['hasIssues'])
-        <div class="relative overflow-hidden rounded-2xl border border-rose-100 bg-white p-4 shadow-lg shadow-rose-50/50 group">
+        <div class="relative group mx-auto max-w-5xl">
+            <div class="absolute -inset-0.5 bg-gradient-to-r from-red-100 to-orange-100 rounded-[2rem] blur opacity-30"></div>
 
-            <div class="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-rose-50 opacity-50 transition-transform group-hover:scale-150 duration-700"></div>
+            <div class="relative flex flex-col lg:flex-row items-center justify-between gap-6 bg-white border border-slate-100 p-6 rounded-[1.5rem] shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)]">
 
-            <div class="relative flex flex-col md:flex-row md:items-center justify-between gap-4">
-
-                <div class="flex items-start gap-4">
-                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-rose-50 text-rose-600 ring-4 ring-rose-50/30">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                <div class="flex items-center gap-6">
+                    <div class="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-red-50 text-red-600 transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 rounded-2xl bg-red-100/50 animate-ping opacity-20"></div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="relative w-7 h-7">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0 3.75h.007v.008H12v-.008ZM2.25 12c0 5.385 4.365 9.75 9.75 9.75s9.75-4.365 9.75-9.75-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12Z" />
                         </svg>
                     </div>
 
-                    <div class="flex flex-col space-y-1">
+                    <div class="space-y-1.5">
                         <div class="flex items-center gap-2">
-                            <h3 class="text-sm font-semibold text-slate-800">
-                                {{ __('Εκκρεμότητα Ρύθμισης ERP') }}
-                            </h3>
-                            <span class="inline-flex items-center rounded-full bg-rose-100 px-2 py-0.5 text-[10px] font-bold text-rose-700 uppercase tracking-wider">
-                                {{ $erpConfig['invalidCount'] }} Stores
+                            <span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-[10px] font-bold text-red-700 uppercase tracking-wider">
+                                ERP Attention Required
                             </span>
+                            <span class="text-[11px] font-medium text-slate-400">Ref: SYNC_ERR_{{ now()->format('Hi') }}</span>
                         </div>
 
-                        <p class="text-xs text-slate-500 leading-relaxed max-w-lg">
-                            {{ __('Εντοπίστηκαν ελλιπή στοιχεία σύνδεσης στα παρακάτω καταστήματα:') }}
-                            <span class="font-medium text-slate-700 italic">
+                        <h3 class="text-lg font-semibold text-slate-800 tracking-tight">
+                            Υπάρχουν <span class="text-red-600 font-bold">{{ $erpConfig['invalidCount'] }} καταστήματα</span> χωρίς σύνδεση
+                        </h3>
+
+                        <div class="flex items-center gap-2 text-sm text-slate-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span class="truncate max-w-md italic">
                                 {{ collect($erpConfig['invalidStores'])->pluck('name')->join(', ') }}
                             </span>
-                        </p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="flex shrink-0 items-center">
-                    <a href="{{ route('admin.stores') }}"
-                       class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-xs font-semibold text-white shadow-md transition-all hover:bg-slate-800 hover:shadow-lg active:scale-95">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="mr-1.5 h-4 w-4 opacity-70">
-                            <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z" />
-                            <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z" />
+                <a href="{{ route('admin.stores') }}"
+                   class="group/btn relative flex items-center gap-3 overflow-hidden rounded-full bg-slate-900 px-7 py-3.5 text-white transition-all hover:bg-black hover:shadow-2xl active:scale-95">
+                    <span class="text-sm font-bold tracking-tight">{{ __('Ρύθμιση Καταστημάτων') }}</span>
+                    <div class="flex h-6 w-6 items-center justify-center rounded-full bg-white/10 group-hover/btn:bg-white/20 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-3.5 h-3.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                         </svg>
-                        {{ __('Διόρθωση Τώρα') }}
-                    </a>
-                </div>
+                    </div>
+                </a>
+
             </div>
         </div>
     @endif
