@@ -9,7 +9,7 @@ use Livewire\Attributes\On;
 class ErpChecker extends Component
 {
 
-    
+
     #[On('erp:check')]
     public function check($id)
     {
