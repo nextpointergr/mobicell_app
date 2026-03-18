@@ -26,6 +26,17 @@
             </ul>
         </div>
 
+
+        <div class="mt-5">
+            <span class="px-4 text-[10px] font-black text-slate-300 uppercase tracking-[0.2em] mb-4 block">{{ __('Pylon') }}</span>
+            <ul class="space-y-1.5">
+                @include('layouts.admin.navs.pylon.dashboard')
+                @include('layouts.admin.navs.pylon.mappings')
+                @include('layouts.admin.navs.pylon.sync')
+                @include('layouts.admin.navs.pylon.settings')
+            </ul>
+        </div>
+
         <div class="mt-5">
             <span class="px-4 text-[10px] font-black text-slate-300 uppercase tracking-[0.2em] mb-4 block">{{ __('System') }}</span>
             <ul class="space-y-1.5">

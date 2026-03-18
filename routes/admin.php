@@ -102,6 +102,25 @@ Route::middleware(['auth:admin'])
         /****************************************** END ROLES **********************************/
 
 
+        Route::get('pylon/m/categories', \App\Livewire\Admin\Pylon\Mapping\Index::class)->name('pylon.categories')
+            ->defaults('permission_label','View Pylon Categories');
+
+        Route::get('pylon/m/payments', \App\Livewire\Admin\Pylon\Mapping\Index::class)->name('pylon.payments')
+            ->defaults('permission_label','View Pylon payments');
+
+        Route::get('pylon/m/shippings', \App\Livewire\Admin\Pylon\Mapping\Index::class)->name('pylon.shippings')
+            ->defaults('permission_label','View Pylon Shipments');
+
+
+        Route::get('pylon/settings', \App\Livewire\Admin\Pylon\Settings\Index::class)->name('pylon.settings')
+            ->defaults('permission_label','View Pylon Settings');
+
+
+        Route::get('pylon/statistics', \App\Livewire\Admin\Pylon\Statistics\Index::class)->name('pylon.stats')
+            ->defaults('permission_label','View Pylon Statistics');
+
+        Route::get('pylon/sync', \App\Livewire\Admin\Pylon\Sync\Index::class)->name('pylon.sync')
+            ->defaults('permission_label','View Pylon Sync');
 
     });
 

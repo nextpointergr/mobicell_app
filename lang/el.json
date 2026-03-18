@@ -30,5 +30,13 @@
     "Generate API Key": "Δημιουργία API Key",
     "This API Key is used by external addons (3rd party addons) to allow other systems to communicate with our software.": "Το συγκεκριμένο API Key χρησιμοποιείται από εξωτερικές εφαρμογές (third-party addons) για την ασφαλή επικοινωνία άλλων συστημάτων με το λογισμικό μας",
     "Save changes": "Ενημέρωση αλλαγών",
-    "Full Name": "Ονοματεπώνυμο"
+    "Full Name": "Ονοματεπώνυμο",
+    "Sync": "Συγχρονισμός",
+    "Mapping": "Αντιστοίχιση",
+    "Categories": "Κατηγορίες",
+    "Payments": "Πληρωμές",
+    "Shipping": "Αποστολές",
+    "Statistics": "Στατιστικά",
+    "Settings ERP": "Παραμετροποίηση"
+
 }
