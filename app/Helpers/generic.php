@@ -1,7 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Cache;
-use App\Services\Mappings\MappingGuard;
 use Illuminate\Support\Str;
+use App\Models\Store;
+
 if (! function_exists('get_system_pagination')) {
     function get_system_pagination(): int
     {
@@ -17,6 +18,21 @@ if (! function_exists('cacheVersion')) {
             "cache.version.{$key}",
             fn () => $default
         );
+    }
+}
+
+if (! function_exists('store_slug')) {
+    function store_slug(int $id): ?string
+    {
+        return Store::where('id', $id)->value('slug');
+    }
+}
+
+if (! function_exists('central_store_slug')) {
+    function central_store_slug(): ?string
+    {
+        $id = \App\Models\Setting::get('central_store_id');
+        return $id ? store_slug($id) : null;
     }
 }
 

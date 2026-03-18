@@ -1,17 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use NextPointer\Pylon\Facades\Pylon;
 Route::view('/', 'welcome');
 
 
 Route::get('test', function () {
-    $response = \Nextpointer\Prestashop\Facades\Prestashop::products()
-        ->limit(10)
-        ->offset(0)
-        ->only(['id','name'])
-        ->get();
-    dd($response);
+
+    $slug = central_store_slug();
+
+
+    if (!$slug) {
+        dd('No central store slug found');
+    }
+
+    $store = Pylon::store($slug);
+    dd($store->payments()->all()->dto());
+
+
 });
 
 Route::view('dashboard', 'dashboard')

@@ -48,8 +48,10 @@ class SyncPrestashopProductsJob implements ShouldQueue
             return;
         }
 
-        $this->performUpsert('prestashop', 'products', $items);
-        $run->increment('processed', count($items));
+        if (!empty($items)) {
+            $this->performUpsert('prestashop', 'products', $items);
+            $run->increment('processed', count($items));
+        }
 
         event(new SyncProgressUpdated(
             entity: 'products',
@@ -65,6 +67,10 @@ class SyncPrestashopProductsJob implements ShouldQueue
                 since: $this->since
             )->onQueue('prestashop');
         } else {
+            ShopData::where('source', 'prestashop')
+                ->where('type', 'products')
+                ->where('last_synced_at', '<', $run->created_at) // Όσα έμειναν πίσω χρονικά
+                ->delete();
             $this->finish($run);
         }
     }

@@ -24,8 +24,6 @@ trait HandlesShopSync
             $externalId = (string)$item['id'];
             $payload = json_encode($item);
             $newHash = md5($payload);
-
-            // Έλεγχος: Αν το hash υπάρχει ήδη και είναι ίδιο, προσπέρασε το
             if (isset($existingHashes[$externalId]) && $existingHashes[$externalId] === $newHash) {
                 continue;
             }

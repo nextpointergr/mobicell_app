@@ -21,6 +21,7 @@ return new class extends Migration
             $table->json('payload');
             $table->timestamp('last_synced_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             // Σύνθετο Unique Index για να λειτουργεί σωστά το upsert
             // και να μην υπάρχουν συγκρούσεις μεταξύ διαφορετικών types

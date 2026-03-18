@@ -105,7 +105,7 @@ class Index extends AComponent
             if ($jobClass === DispatchPrestashopGenericSyncJob::class) {
                 $job = new $jobClass($entity);
             } elseif ($entity === 'products') {
-                $job = new $jobClass(500);
+                $job = new $jobClass($entity);
             } else {
                 $job = new $jobClass($entity);
             }

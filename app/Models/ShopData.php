@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ShopData extends Model
 {
+    use SoftDeletes;
     // Ορίζουμε το table αν το όνομα διαφέρει, αλλά το ShopData -> shop_data είναι standard
     protected $table = 'shop_data';
+
 
     protected $fillable = [
         'source',
