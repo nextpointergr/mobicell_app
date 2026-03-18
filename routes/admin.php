@@ -30,8 +30,8 @@ Route::middleware(['auth:admin'])
 
             Route::get('stores/create',\App\Livewire\Admin\Stores\Form::class)->name('stores.create')
             ->defaults('permission_label','Create New Store');
-            Route::get('stores/edit/{id}',\App\Livewire\Admin\Stores\Form::class)->name('stores.edit')->defaults('permission_label','Edit Store');
-            Route::get('stores/delete/{id}',\App\Livewire\Admin\Stores\Delete::class)->name('stores.delete')->defaults('permission_label','Delete Store');
+            Route::get('stores/edit/{store}',\App\Livewire\Admin\Stores\Form::class)->name('stores.edit')->defaults('permission_label','Edit Store');
+            Route::get('stores/delete/{store}',\App\Livewire\Admin\Stores\Delete::class)->name('stores.delete')->defaults('permission_label','Delete Store');
 
 
 

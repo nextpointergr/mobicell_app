@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\Models\Store;
 use InvalidArgumentException;
-use NextPointer\Pylon\Client\PylonClient;
 use NextPointer\Pylon\Store\PylonStore;
+use NextPointer\Pylon\Client\PylonClient;
 
 class PylonManager extends \NextPointer\Pylon\Manager\PylonManager
 {

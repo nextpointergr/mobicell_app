@@ -99,7 +99,7 @@
                             <div class="mt-4">
                                 <button
                                     type="button"
-                                    wire:click="testConnection"
+                                    wire:click="$dispatch('erp:check', {{ $id }})"
                                     class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
                                 >
                                     {{ __('Test ERP Connection') }}

@@ -205,6 +205,9 @@
 
 
 
+            <livewire:admin.global.erp-checker />
+
+
         </main>
 
         {{-- Footer --}}
@@ -258,21 +261,21 @@
         });
     });
 
-     document.addEventListener('livewire:init', () => {
-        Livewire.on('notify', (payload) => {
-            const data = payload[0] ?? {};
+    document.addEventListener('livewire:init', () => {
+        Livewire.on('notify', (data) => {
 
             Swal.fire({
                 toast: true,
                 position: 'top-end',
-                icon: data.type ?? 'success',
-                title: data.message ?? 'Done',
+                icon: data?.type ?? 'success',
+                title: data?.message ?? 'Done',
                 showConfirmButton: false,
-                timer: 2200,
+                timer: data?.timer ?? 2200,
                 timerProgressBar: true,
             });
+
         });
-     });
+    });
 </script>
 </body>
 </html>
