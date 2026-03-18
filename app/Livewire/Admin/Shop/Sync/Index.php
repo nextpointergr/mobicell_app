@@ -159,6 +159,7 @@ class Index extends AComponent
     public function getSyncStats(string $entity)
     {
         $run = SyncRun::where('entity', $entity)->latest()->first();
+
         if (!$run) return ['created' => 0, 'updated' => 0];
 
         $logs = Activity::query()

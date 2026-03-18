@@ -21,6 +21,7 @@
 @endphp
 
 <div
+    id="card-{{ $entity }}"
     wire:click="toggleEntity('{{ $entity }}')"
     class="group relative flex flex-col overflow-hidden rounded-2xl border transition-all duration-300 cursor-pointer h-full
     {{ $isSelected

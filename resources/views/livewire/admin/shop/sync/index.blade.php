@@ -55,8 +55,32 @@
             {{-- Decorative background gradient (προαιρετικό για βάθος) --}}
             <div class="absolute -top-24 -left-24 w-96 h-96 bg-indigo-50 rounded-full blur-[120px] -z-10 opacity-60"></div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 {{ $isFullSync ? 'opacity-40 grayscale-[0.5]' : '' }} transition-all duration-700">
-                @foreach($entities as $id => $config)
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 {{ $isFullSync ? 'opacity-40 grayscale-[0.5]' : '' }} transition-all duration-700"
+                 x-data="{
+        lastScrolledEntity: '',
+        handleAutoScroll(progress) {
+            // Παίρνουμε το κλειδί της τελευταίας οντότητας που συγχρονίζεται
+            const activeEntities = Object.keys(progress);
+            if (activeEntities.length === 0) return;
+
+            const currentEntity = activeEntities[activeEntities.length - 1];
+
+
+            if (currentEntity !== this.lastScrolledEntity) {
+            this.lastScrolledEntity = currentEntity;
+            const el = document.getElementById('card-' + currentEntity);
+            if (el) {
+            el.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+            });
+            }
+            }
+            }
+            }"
+            {{-- Κάθε φορά που αλλάζει το progress στο Livewire, τρέχει η συνάρτηση --}}
+            x-init="$watch('$wire.progress', value => handleAutoScroll(value))"
+            >     @foreach($entities as $id => $config)
                     <div class="h-full transform transition-all duration-500 hover:z-10">
                         <x-sync-card
                             :entity="$id"
@@ -75,49 +99,63 @@
         </div>
     </div>
 
-    {{-- MODERN STICKY FOOTER --}}
     @if(count($selected) > 0 || $isFullSync)
-        <div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-full max-w-2xl px-4 animate-in fade-in slide-in-from-bottom-8 duration-500">
-            <div class="bg-slate-900/90 backdrop-blur-md rounded-3xl p-4 shadow-2xl border border-white/10 flex items-center justify-between">
-                <div class="flex items-center gap-4 pl-4">
-                    <div class="flex -space-x-2">
-                        @foreach($selected as $sel)
-                            <div class="h-8 w-8 rounded-full bg-indigo-500 border-2 border-slate-900 flex items-center justify-center text-[10px] text-white font-bold uppercase">
-                                {{ substr($sel, 0, 1) }}
-                            </div>
-                        @endforeach
-                    </div>
-                    <div>
-                        <div class="text-white text-sm font-bold">
-                            {{ count($selected) }} {{ __('Entities selected') }}
-                        </div>
-                        <div class="text-slate-400 text-xs">
-                            {{ $isFullSync ? __('System is locked during full sync') : __('Ready to push updates') }}
-                        </div>
-                    </div>
-                </div>
+        <div class="fixed inset-x-0 bottom-0 z-50 flex justify-center px-3 sm:px-4 pb-[calc(env(safe-area-inset-bottom)+12px)]">
 
-                <div class="flex items-center gap-3">
-                    <button wire:click="deselectAll" class="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white transition">
-                        {{ __('Cancel') }}
-                    </button>
-                    <button
-                        wire:click="startSelected"
-                        class="bg-indigo-500 hover:bg-indigo-400 text-white px-8 py-3 rounded-2xl font-bold text-sm shadow-lg shadow-indigo-500/20 flex items-center gap-2 transition-all active:scale-95"
-                    >
-                        @if($isFullSync || count($progress) > 0)
-                            <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                            {{ __('Syncing...') }}
-                        @else
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                            {{ __('Start Sync Now') }}
-                        @endif
-                    </button>
+            <div class="w-full max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-500">
+
+                <div class="bg-slate-900/90 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 shadow-2xl border border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+
+                    {{-- LEFT --}}
+                    <div class="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
+
+                        <div class="flex -space-x-2">
+                            @foreach($selected as $sel)
+                                <div class="h-8 w-8 rounded-full bg-indigo-500 border-2 border-slate-900 flex items-center justify-center text-[10px] text-white font-bold uppercase">
+                                    {{ substr($sel, 0, 1) }}
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <div class="leading-tight">
+                            <div class="text-white text-sm font-bold">
+                                {{ count($selected) }} {{ __('Entities selected') }}
+                            </div>
+                            <div class="text-slate-400 text-xs">
+                                {{ $isFullSync ? __('System is locked during full sync') : __('Ready to push updates') }}
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- RIGHT --}}
+                    <div class="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-end">
+
+                        <button
+                            wire:click="deselectAll"
+                            class="px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-slate-300 hover:text-white transition"
+                        >
+                            {{ __('Cancel') }}
+                        </button>
+
+                        <button
+                            wire:click="startSelected"
+                            class="bg-indigo-500 hover:bg-indigo-400 text-white px-5 sm:px-8 py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm shadow-lg shadow-indigo-500/20 flex items-center justify-center gap-2 transition-all active:scale-95 w-full sm:w-auto"
+                        >
+                            @if($isFullSync || count($progress) > 0)
+                                <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                {{ __('Syncing...') }}
+                            @else
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                                {{ __('Start Sync Now') }}
+                            @endif
+                        </button>
+
+                    </div>
                 </div>
             </div>
         </div>
