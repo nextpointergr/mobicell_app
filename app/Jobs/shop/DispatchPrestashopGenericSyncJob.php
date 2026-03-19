@@ -1,32 +1,36 @@
 <?php
 
 namespace App\Jobs\shop;
-use App\Jobs\shop\entity\SyncPrestashopCarriersJob;
-use App\Jobs\shop\entity\SyncPrestashopPaymentsJob;
-use App\Jobs\shop\entity\SyncPrestashopProductsJob;
-use App\Jobs\shop\entity\SyncPrestashopTaxesJob;
-use App\Models\ExternalSync;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Queue\Queueable;
-use App\Models\SyncRun;
-use Illuminate\Foundation\Bus\Dispatchable;
-use App\Jobs\shop\entity\SyncPrestashopCategoriesJob;
 
+use App\Jobs\shop\SyncPrestashopEntityJob;
+use App\Models\ExternalSync;
+use App\Models\SyncRun;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Foundation\Queue\Queueable;
 
 class DispatchPrestashopGenericSyncJob implements ShouldQueue
 {
     use Dispatchable, Queueable;
 
-    public function __construct(public string $entity) {}
+    public int $tries = 1;
+    public int $timeout = 120;
+
+    public function __construct(
+        public string $entity,
+        public ?int $userId = null
+    ) {
+    }
 
     public function handle(): void
     {
         $run = SyncRun::create([
-            'source'    => 'prestashop',
-            'entity'    => $this->entity,
+            'source' => 'prestashop',
+            'entity' => $this->entity,
             'direction' => 'import',
-            'status'    => 'running',
+            'status' => 'running',
             'started_at' => now(),
+            'user_id' => $this->userId,
         ]);
 
         $sync = ExternalSync::firstOrCreate([
@@ -35,25 +39,19 @@ class DispatchPrestashopGenericSyncJob implements ShouldQueue
         ]);
 
         $since = null;
+        $until = null;
+
         if ($this->entity === 'products') {
             $since = $sync->last_synced_at?->format('Y-m-d H:i:s');
+            $until = now()->format('Y-m-d H:i:s');
         }
 
-        $workerClass = match($this->entity) {
-            'categories' => SyncPrestashopCategoriesJob::class,
-            'carriers' => SyncPrestashopCarriersJob::class,
-            'taxes' => SyncPrestashopTaxesJob::class,
-            'payments' => SyncPrestashopPaymentsJob::class,
-            'products' => SyncPrestashopProductsJob::class,
-            default      => null
-        };
-        if ($workerClass) {
-            $workerClass::dispatch(
-                runId: $run->id,
-                offset: 0,
-                limit: 100,
-                since: $since
-            )->onQueue('prestashop');
-        }
+        SyncPrestashopEntityJob::dispatch(
+            runId: $run->id,
+            entity: $this->entity,
+            limit: $this->entity === 'products' ? 200 : 1000,
+            since: $since,
+               until: $until
+        )->onQueue('prestashop');
     }
 }

@@ -13,18 +13,19 @@ return new class extends Migration
     {
         Schema::create('shop_data', function (Blueprint $table) {
             $table->id();
-            $table->string('source')->default('prestashop')->nullable();
+            $table->string('source')->default('prestashop');
             $table->string('type');
             $table->string('external_id');
-            $table->string('hash');
-            $table->json('payload');
+            $table->string('hash', 32);
+            $table->longText('payload');
             $table->timestamp('last_synced_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            // Σύνθετο Unique Index για να λειτουργεί σωστά το upsert
-            // και να μην υπάρχουν συγκρούσεις μεταξύ διαφορετικών types
             $table->unique(['source', 'type', 'external_id'], 'shop_data_unique_index');
+            $table->index(['source', 'type']);
+            $table->index(['type', 'deleted_at']);
+            $table->index(['last_synced_at']);
         });
     }
 

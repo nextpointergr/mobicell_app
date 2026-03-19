@@ -36,6 +36,14 @@
                         </a>
                 @endcan
 
+                    @can('admin.suppliers.mapping')
+                        <a href="{{ route('admin.suppliers.mapping', $item) }}"
+                           class="h-8 w-8 rounded-full bg-gray-200
+                                   flex items-center justify-center"><i class="material-symbols-rounded text-xl">
+                                mapping
+                            </i>
+                        </a>
+                    @endcan
             </div>
         </td>
     @endcanany

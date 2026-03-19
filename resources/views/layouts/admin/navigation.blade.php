@@ -56,14 +56,5 @@
         </div>
     </nav>
 
-    {{-- Bottom Section --}}
-    <div class="absolute bottom-0 w-full p-8 bg-gradient-to-t from-white via-white to-transparent">
-        <div class="flex items-center gap-2.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-            <span class="relative flex h-2 w-2">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-20"></span>
-                <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-            </span>
-            {{ __('System Live') }}
-        </div>
-    </div>
+
 </aside>

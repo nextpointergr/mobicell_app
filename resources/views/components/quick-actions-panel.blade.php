@@ -52,6 +52,16 @@
                 <span class="font-semibold">{{ __('ERP Synchronization') }}</span>
             </a>
             @endcan
+
+            @can('admin.suppliers.sync')
+                <a href="{{route('admin.suppliers.sync')}}"
+                   class="group flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200">
+                    <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-50 group-hover:bg-white shadow-sm transition-colors border border-slate-100">
+                        <i class="material-symbols-rounded text-[20px]">cloud_sync</i>
+                    </div>
+                    <span class="font-semibold">{{ __('Suppliers Synchronization') }}</span>
+                </a>
+            @endcan
         </div>
 
         <button

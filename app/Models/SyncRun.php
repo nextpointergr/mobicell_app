@@ -12,19 +12,25 @@ class SyncRun extends Model
         'direction',
         'status',
         'processed',
+        'created',
+        'updated',
+        'skipped',
+        'deleted',
+        'restored',
         'errors',
         'total',
+        'total_records',
         'started_at',
         'finished_at',
         'meta',
+        'error_message',
         'user_id',
-        'total_records'
     ];
 
     protected $casts = [
+        'meta' => 'array',
         'started_at' => 'datetime',
         'finished_at' => 'datetime',
-        'meta' => 'array',
     ];
 
 }

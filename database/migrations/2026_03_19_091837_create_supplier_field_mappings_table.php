@@ -27,9 +27,15 @@ return new class extends Migration
                 ->comment('Αν το πεδίο είναι υποχρεωτικό για εισαγωγή');
             $table->boolean('active')->default(true)
                 ->comment('Αν το mapping είναι ενεργό');
+
+            $table->boolean('is_hashable')->default(true);     // Συμμετέχει στον έλεγχο αλλαγών;
+            $table->boolean('is_unique_check')->default(false); // Έλεγχος για διπλότυπα (π.χ. EAN);
+            $table->boolean('ignore_if_exists')->default(false); // Αν υπάρχει η τιμή, αγνόησε όλο το προϊόν;
+
             $table->timestamps();
             $table->unique(['supplier_id', 'source_field']);
             $table->index(['supplier_id', 'target_field']);
+
         });
     }
 

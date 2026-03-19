@@ -26,6 +26,10 @@ Route::middleware(['auth:admin'])
             Route::get('suppliers/create', \App\Livewire\Admin\Suppliers\Form::class)->name('suppliers.create')->defaults('permission_label', 'Create Supplier');
             Route::get('supplier/{supplier}/edit' , \App\Livewire\Admin\Suppliers\Form::class)->name('suppliers.edit')->defaults('permission_label', 'Edit Supplier');
             Route::get('supplier/{supplier}/delete' , \App\Livewire\Admin\Suppliers\Delete::class)->name('suppliers.delete')->defaults('permission_label', 'Edit Supplier');
+            Route::get('supplier/{supplier}/mapping' , \App\Livewire\Admin\Suppliers\MappingFields::class)->name('suppliers.mapping')->defaults('permission_label', 'mapping Supplier');
+            Route::get('suppliers/sync'
+                , \App\Livewire\Admin\Suppliers\Sync::class)->name('suppliers.sync')->defaults('permission_label', 'mapping Supplier');
+
 
 
 

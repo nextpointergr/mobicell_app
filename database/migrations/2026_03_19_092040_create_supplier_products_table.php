@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('sync_action')->default('review')->index()
                 ->comment('review, create, update, skip, needs_content');
             $table->text('notes')->nullable();
+            $table->text('lookup_key')->nullable();
             $table->string('hash')->nullable()->index();
             $table->timestamps();
             $table->unique(['supplier_id', 'external_id']);

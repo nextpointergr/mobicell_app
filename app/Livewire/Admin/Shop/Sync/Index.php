@@ -88,44 +88,65 @@ class Index extends AComponent
         }
     }
 
+//    public function startSelected(): void
+//    {
+//        if (!$this->selected) return;
+//
+//        $this->progress = [];
+//        $this->completed = [];
+//        $jobs = [];
+//
+//        foreach ($this->selected as $entity) {
+//            $this->progress[$entity] = 0;
+//            $config = $this->entities[$entity];
+//            $jobClass = $config['job'];
+//
+//            // Instantiate Job
+//            if ($jobClass === DispatchPrestashopGenericSyncJob::class) {
+//                $job = new $jobClass($entity);
+//            } elseif ($entity === 'products') {
+//                $job = new $jobClass($entity);
+//            } else {
+//                $job = new $jobClass($entity);
+//            }
+//
+//            $job->onQueue($config['queue']);
+//            $jobs[$entity] = $job;
+//        }
+//
+//        // Handle Dependencies (π.χ. Products depends on ERP Products)
+//        foreach ($this->selected as $entity) {
+//            $depends = $this->entities[$entity]['depends'] ?? null;
+//            if ($depends && isset($jobs[$depends])) {
+//                Bus::chain([$jobs[$depends], $jobs[$entity]])->dispatch();
+//                unset($jobs[$entity], $jobs[$depends]);
+//            }
+//        }
+//
+//        foreach ($jobs as $job) {
+//            dispatch($job);
+//        }
+//
+//        $this->refreshStatus();
+//    }
+
     public function startSelected(): void
     {
         if (!$this->selected) return;
 
         $this->progress = [];
         $this->completed = [];
-        $jobs = [];
 
         foreach ($this->selected as $entity) {
             $this->progress[$entity] = 0;
-            $config = $this->entities[$entity];
-            $jobClass = $config['job'];
-
-            // Instantiate Job
-            if ($jobClass === DispatchPrestashopGenericSyncJob::class) {
-                $job = new $jobClass($entity);
-            } elseif ($entity === 'products') {
-                $job = new $jobClass($entity);
-            } else {
-                $job = new $jobClass($entity);
-            }
-
-            $job->onQueue($config['queue']);
-            $jobs[$entity] = $job;
         }
 
-        // Handle Dependencies (π.χ. Products depends on ERP Products)
-        foreach ($this->selected as $entity) {
-            $depends = $this->entities[$entity]['depends'] ?? null;
-            if ($depends && isset($jobs[$depends])) {
-                Bus::chain([$jobs[$depends], $jobs[$entity]])->dispatch();
-                unset($jobs[$entity], $jobs[$depends]);
-            }
-        }
+        $jobs = collect($this->selected)
+            ->map(fn ($entity) => new DispatchPrestashopGenericSyncJob($entity))
+            ->values()
+            ->all();
 
-        foreach ($jobs as $job) {
-            dispatch($job);
-        }
+        Bus::chain($jobs)->dispatch();
 
         $this->refreshStatus();
     }

@@ -7,6 +7,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "jantinnerezo/livewire-alert": "^4.0",
         "laravel/framework": "^12.0",
         "laravel/reverb": "^1.8",
         "laravel/tinker": "^2.10.1",
@@ -14,6 +15,7 @@
         "livewire/volt": "^1.7.0",
         "nextpointer/prestashop": "main-dev",
         "nextpointer/pylon": "main-dev",
+        "prewk/xml-string-streamer": "^1.2",
         "spatie/laravel-activitylog": "^4.11",
         "spatie/laravel-permission": "^7.2"
     },

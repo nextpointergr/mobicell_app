@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ShopData extends Model
 {
     use SoftDeletes;
-    // Ορίζουμε το table αν το όνομα διαφέρει, αλλά το ShopData -> shop_data είναι standard
-    protected $table = 'shop_data';
 
+    protected $table = 'shop_data';
 
     protected $fillable = [
         'source',
@@ -22,8 +21,9 @@ class ShopData extends Model
     ];
 
     protected $casts = [
-        'payload' => 'array', // Αυτόματο conversion από JSON σε PHP array
+        'payload' => 'array',
         'last_synced_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     public static function hasChanged(string $source, string $type, string $id, string $newHash): bool

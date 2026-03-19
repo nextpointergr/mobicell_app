@@ -23,7 +23,7 @@ class SyncPrestashopCategoriesJob implements ShouldQueue
     public function __construct(
         public int $runId,
         public int $offset = 0,
-        public int $limit = 100, // Μικρότερο limit για κατηγορίες/shipping
+        public int $limit = 1000,
         public ?string $since = null
     ) {}
 

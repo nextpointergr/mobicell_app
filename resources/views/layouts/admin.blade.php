@@ -170,7 +170,7 @@
 ])
 
 @livewireScripts
-
+{{--<x-livewire-alert::scripts />--}}
 @stack('scripts')
 
 <script>

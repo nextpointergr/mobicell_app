@@ -15,19 +15,25 @@ return new class extends Migration
             $table->id();
             $table->string('source');
             $table->string('entity');
-            $table->string('direction');
-
-            $table->string('status');
+            $table->string('direction')->default('import');
+            $table->string('status')->default('pending');
 
             $table->unsignedBigInteger('processed')->default(0);
+            $table->unsignedBigInteger('created')->default(0);
+            $table->unsignedBigInteger('updated')->default(0);
+            $table->unsignedBigInteger('skipped')->default(0);
+            $table->unsignedBigInteger('deleted')->default(0);
+            $table->unsignedBigInteger('restored')->default(0);
             $table->unsignedBigInteger('errors')->default(0);
+
             $table->unsignedBigInteger('total')->nullable();
             $table->unsignedBigInteger('total_records')->nullable();
-            $table->timestamp('started_at');
+
+            $table->timestamp('started_at')->nullable();
             $table->timestamp('finished_at')->nullable();
 
             $table->json('meta')->nullable();
-
+            $table->text('error_message')->nullable();
 
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
 
