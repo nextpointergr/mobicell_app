@@ -21,9 +21,16 @@ class Index extends AComponent
     protected array $entities = [
         'payments' => [
             'job' => DispatchPylonGenericSyncJob::class,
-            'queue' => 'prestashop',
-            'title' => 'Categories',
-            'desc' => 'Categories',
+            'queue' => 'pylon',
+            'title' => 'Payments',
+            'desc' => 'Payments',
+        ],
+
+        'shipping' => [
+            'job' => DispatchPylonGenericSyncJob::class,
+            'queue' => 'pylon',
+            'title' => 'Carriers',
+            'desc' => 'Carriers',
         ],
     ];
 

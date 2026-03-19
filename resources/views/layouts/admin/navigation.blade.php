@@ -26,6 +26,16 @@
             </ul>
         </div>
 
+        <div class="mt-5">
+            <span class="px-4 text-[10px] font-black text-slate-300 uppercase tracking-[0.2em] mb-4 block">{{ __('Catalog') }}</span>
+            <ul class="space-y-1.5">
+
+                @include('layouts.admin.navs.products')
+                @include('layouts.admin.navs.suppliers.suppliers')
+
+            </ul>
+        </div>
+
 
         <div class="mt-5">
             <span class="px-4 text-[10px] font-black text-slate-300 uppercase tracking-[0.2em] mb-4 block">{{ __('Pylon') }}</span>

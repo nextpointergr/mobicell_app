@@ -1,54 +1,18 @@
+@can('admin.products')
+<li class="list-none group">
+    @php $isActive = request()->routeIs('admin.products'); @endphp
+    <a href="{{ route('admin.products') }}"
+       class="flex items-center gap-4 px-4 py-2.5 rounded-xl transition-all duration-300 relative
+       {{ $isActive ? 'text-slate-900 bg-slate-50/50' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 hover:translate-x-1' }}">
 
+        <i class="ti ti-smart-home text-[20px] transition-colors
+        {{ $isActive ? 'text-[#c02228]' : 'text-slate-300 group-hover:text-slate-500' }}"></i>
 
+        <span class="font-bold text-[13.5px] tracking-tight">{{ __('Products') }}</span>
 
-@php
-    $productsOpen = request()->routeIs('admin.products*');
-    // Ιδανικά αυτό το count θα έρχεται από ένα View Composer,
-    // αλλά για το παράδειγμα το βάζουμε εδώ:
-
-    $pendingCount = \App\Models\Product::pendingReview()->count();
-
-@endphp
-
-<li class="menu-item">
-    {{-- TOGGLE --}}
-    <button type="button"
-            onclick="this.nextElementSibling.classList.toggle('hidden')"
-            class="flex items-center w-full gap-3
-                   px-4 py-2.5 rounded-lg text-sm
-                   text-slate-700 transition
-                   hover:bg-slate-100
-                   {{ $productsOpen ? 'bg-slate-100 font-medium' : '' }}">
-
-        <i class="material-symbols-rounded text-xl">inventory_2</i>
-        <span>{{ __('Products') }}</span>
-
-        <i class="material-symbols-rounded ms-auto text-base transition
-            {{ $productsOpen ? 'rotate-90' : '' }}">
-            chevron_right
-        </i>
-    </button>
-
-    <div class="mt-1 space-y-1 {{ $productsOpen ? '' : 'hidden' }}">
-
-        {{-- GENERAL --}}
-        @can('admin.products')
-            <a href="{{ route('admin.products') }}"
-               class="flex items-center w-full
-                      ps-12 pe-4 py-2.5 rounded-lg text-sm
-                      text-slate-600 transition
-                      hover:bg-slate-100
-                      {{ request()->routeIs('admin.products') ? 'bg-slate-100 font-medium' : '' }}">
-
-                {{ __('All products') }}
-            </a>
-        @endcan
-
-        @if($pendingCount > 0)
-            <a href="{{ route('admin.products', ['filter' => 'missing_stock']) }}"
-               class="flex items-center w-full ps-12 pe-4 py-2 rounded-lg text-sm text-red-500 hover:bg-red-50 {{ request()->fullUrlIs('*missing_stock*') ? 'bg-red-50 font-bold' : '' }}">
-                {{ __('Missing Stock') }}
-            </a>
+        @if($isActive)
+            <div class="absolute -left-4 w-1 h-5 bg-[#c02228] rounded-r-full shadow-[2px_0_10px_rgba(192,34,40,0.2)]"></div>
         @endif
-    </div>
+    </a>
 </li>
+@endcan

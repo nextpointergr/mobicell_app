@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('source')->default('prestashop')->nullable();
             $table->string('type');
             $table->string('external_id');
-
             $table->string('hash');
             $table->json('payload');
             $table->timestamp('last_synced_at')->nullable();

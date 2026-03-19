@@ -22,6 +22,15 @@ Route::middleware(['auth:admin'])
         Route::middleware('admin.permission')->group(function () {
 
 
+            Route::get('suppliers', \App\Livewire\Admin\Suppliers\Index::class)->name('suppliers')->defaults('permission_label','View Suppliers');
+            Route::get('suppliers/create', \App\Livewire\Admin\Suppliers\Form::class)->name('suppliers.create')->defaults('permission_label', 'Create Supplier');
+            Route::get('supplier/{supplier}/edit' , \App\Livewire\Admin\Suppliers\Form::class)->name('suppliers.edit')->defaults('permission_label', 'Edit Supplier');
+            Route::get('supplier/{supplier}/delete' , \App\Livewire\Admin\Suppliers\Delete::class)->name('suppliers.delete')->defaults('permission_label', 'Edit Supplier');
+
+
+
+            Route::get('products', \App\Livewire\Admin\Catalog\Products\Index::class)->name('products')->defaults('permission_label','View Catalog Products');
+
 
 
 
@@ -125,5 +134,6 @@ Route::middleware(['auth:admin'])
 
         Route::get('shop/sync', \App\Livewire\Admin\Shop\Sync\Index::class)->name('shop.sync');
 
-    });
+});
+
 

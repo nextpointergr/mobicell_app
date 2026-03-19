@@ -35,7 +35,7 @@ class DispatchPylonGenericSyncJob implements ShouldQueue
 
         $workerClass = match($this->entity) {
             'payments' => SyncPylonPaymentsJob::class,
-//            'carriers' => SyncPylonCarriersJob::class,
+            'carriers' => SyncPylonCarriersJob::class,
 //            'categories' => SyncPylonCategoriesJob::class,
             default    => null
         };
