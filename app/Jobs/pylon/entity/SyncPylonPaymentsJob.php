@@ -12,6 +12,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use NextPointer\Pylon\Facades\Pylon;
 
 class SyncPylonPaymentsJob implements ShouldQueue
 {
@@ -24,12 +25,12 @@ class SyncPylonPaymentsJob implements ShouldQueue
         public array $processedIds = []
     ) {}
 
-    public function handle(PylonManager $pylonManager): void
+    public function handle(): void
     {
         $run = SyncRun::findOrFail($this->runId);
         if ($run->status !== 'running') return;
 
-        $pylon = $pylonManager->store(central_store_slug());
+        $pylon = Pylon::store(central_store_slug());
 
         // Καλούμε το resource δυναμικά ή στατικά (εδώ payments)
         $dtos = $pylon->payments()->all($this->page, $this->size)->dto();

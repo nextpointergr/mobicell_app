@@ -13,7 +13,6 @@ trait HandlesErpSync
         $now = now();
         $dbIds = [];
 
-        // Caching Store IDs για να μην κάνουμε queries μέσα στο loop
         $stores = Store::whereIn('slug', [central_store_slug(), 'elliniko'])
             ->pluck('id', 'slug');
 
@@ -58,7 +57,7 @@ trait HandlesErpSync
 
     public function cleanupMissingEntities(string $type, array $processedIds): void
     {
-        // Απενεργοποίηση όσων υπήρχαν στη βάση αλλά έλειπαν από το τελευταίο Sync
+
         Entity::where('type', $type)
             ->whereNotIn('id', $processedIds)
             ->update(['active' => false]);

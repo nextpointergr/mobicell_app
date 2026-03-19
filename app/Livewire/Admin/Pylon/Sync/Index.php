@@ -19,7 +19,7 @@ class Index extends AComponent
      | ENTITIES CONFIG
      |-----------------------------------------------------------------*/
     protected array $entities = [
-        'categories' => [
+        'payments' => [
             'job' => DispatchPylonGenericSyncJob::class,
             'queue' => 'prestashop',
             'title' => 'Categories',

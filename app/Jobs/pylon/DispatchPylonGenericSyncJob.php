@@ -28,12 +28,19 @@ class DispatchPylonGenericSyncJob implements ShouldQueue
             'started_at' => now(),
         ]);
 
+        $sync = ExternalSync::firstOrCreate([
+            'source' => 'pylon',
+            'entity' => $this->entity,
+        ]);
+
         $workerClass = match($this->entity) {
             'payments' => SyncPylonPaymentsJob::class,
 //            'carriers' => SyncPylonCarriersJob::class,
 //            'categories' => SyncPylonCategoriesJob::class,
             default    => null
         };
+
+
 
         if ($workerClass) {
             $workerClass::dispatch(

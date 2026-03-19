@@ -1232,16 +1232,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v12.55.0",
+            "version": "v12.55.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "6917962a55ac91598e8c5e2ebd25e27aed121b5e"
+                "reference": "6d9185a248d101b07eecaf8fd60b18129545fd33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/6917962a55ac91598e8c5e2ebd25e27aed121b5e",
-                "reference": "6917962a55ac91598e8c5e2ebd25e27aed121b5e",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/6d9185a248d101b07eecaf8fd60b18129545fd33",
+                "reference": "6d9185a248d101b07eecaf8fd60b18129545fd33",
                 "shasum": ""
             },
             "require": {
@@ -1450,7 +1450,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-03-17T14:19:00+00:00"
+            "time": "2026-03-18T14:28:59+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -2795,7 +2795,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:nextpointergr/laravel_prestashop.git",
-                "reference": "f0049745e05e984c7ed95ad479ca4da67c09e274"
+                "reference": "fd40ea594d12a5f234c4f4a31662fe0cbdb5749f"
             },
             "require": {
                 "illuminate/http": "^10|^11|^12",
@@ -2826,7 +2826,7 @@
                 }
             ],
             "description": "Nextpointer PrestaShop API Client",
-            "time": "2026-03-11T23:31:38+00:00"
+            "time": "2026-03-18T17:12:21+00:00"
         },
         {
             "name": "nextpointer/pylon",
